@@ -1,0 +1,12 @@
+FROM node:10
+
+# 이미지 안에서 어플리케이션 소스를 가지고 있을 디렉토리
+WORKDIR /usr/src/app
+
+COPY ./ ./
+
+RUN npm install
+
+CMD ["node", "server.js"]
+
+#docker run -p 호스트pc 포트 : 도커 컨테이너 포트 이미지ID

@@ -15,9 +15,8 @@ const client = redis.createClient({
 
 client.set("num", 0);
 app.get("/", (req, res) => {
-  console.log(req.body);
-  client("num", (err, num) => {
-    client.set("num", parseInt(num) + 1);
+  client.get("num", (err, num) => {
     res.send(`리프레시 할 때마다 숫자가 증가, 숫자: ${num}`);
+    client.set("num", parseInt(num) + 1);
   });
 });

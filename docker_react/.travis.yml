@@ -1,0 +1,11 @@
+sudo: required
+language: generic #node, python
+services:
+  - docker
+before_install:
+  - echo "이미지 생성 성공"
+  - docker build -t ejayjeon/react -f dockerfile.dev .
+script:
+  - docker run -e CI=true ejayjeon/react npm run test -- --coverage
+after_success:
+  - echo "테스트 성공"

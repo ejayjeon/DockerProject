@@ -1,5 +1,11 @@
 sudo: required
 language: node_js #node, python
+git:
+  depth: 2
+  autocrlf: input
+  branches:
+    only:
+      - master
 services:
   - docker
 before_install:

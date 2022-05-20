@@ -160,7 +160,7 @@ dist
 .DS_*
 **/*.backup.*
 **/*.back.*
-
+.env
 node_modules
 
 *.sublime*

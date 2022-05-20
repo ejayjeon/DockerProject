@@ -1,5 +1,5 @@
 sudo: required
-language: generic #node, python
+language: node_js #node, python
 services:
   - docker
 before_install:

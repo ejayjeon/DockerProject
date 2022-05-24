@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t ejayjeon/react-test-app -f ./fe/dockerfile.dev ./fe
+
+script:
+  - docker run -e CI=true ejayjeon/reat-test-app npm run test
+
+after_success:
+  - docker build -t ejayjeon/docker-frontend ./fe
+  - docker build -e ejayjeon/docker-backend ./be
+  - docker build -e ejayjeon/docker-nginx ./nginx
+
+  # 도커허브 로그인
+  - echo "$DOCKER_HUB_PWD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+  # 도커허브로 push
+  - docker push ejayjeon/docker-frontend
+  - docker push ejayjeon/docker-backend
+  - docker push ejayjeon/docker-nginx

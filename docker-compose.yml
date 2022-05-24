@@ -1,0 +1,47 @@
+version: "3"
+services:
+  frontend:
+    # 개발환경을 위한 Dockerfile 위치
+
+    build:
+      dockerfile: dockerfile.dev
+      context: ./fe
+    # 코드 수정 시 node_modules 재로딩 없이 수정된 코드가 반영될 수 있도록 volumes를 설정
+    volumes:
+      - /app/node_modules
+      - ./fe:/app
+    stdin_open: true
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: dockerfile
+      context: ./nginx
+    ports:
+      - "3000:80"
+
+  backend:
+    platform: linux/x86_64
+    build:
+      dockerfile: dockerfile.dev
+      context: ./be
+    container_name: app_be
+    volumes:
+      - /app/node_modules
+      - ./be:/app
+
+  mysql:
+    build: ./mysql
+    restart: unless-stopped
+    container_name: app_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/mysql_data:/var/lib/mysql
+      - ./mysql/sql/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD:
+      MYSQL_DATABASE: app
+      MYSQL_PORT: 3306

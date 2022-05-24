@@ -11,8 +11,8 @@ services:
 
 after_success:
   - docker build -t ejayjeon/docker-frontend ./fe
-  - docker build -e ejayjeon/docker-backend ./be
-  - docker build -e ejayjeon/docker-nginx ./nginx
+  - docker build -t ejayjeon/docker-backend ./be
+  - docker build -t ejayjeon/docker-nginx ./nginx
 
   # 도커허브 로그인
   - echo "$DOCKER_HUB_PWD" | docker login -u "$DOCKER_HUB_ID" --password-stdin

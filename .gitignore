@@ -171,3 +171,4 @@ sketch
 # db
 db/
 *.sql
+mysql_data

@@ -2,7 +2,6 @@ version: "3"
 services:
   frontend:
     # 개발환경을 위한 Dockerfile 위치
-
     build:
       dockerfile: dockerfile.dev
       context: ./fe
@@ -21,7 +20,6 @@ services:
       - "3000:80"
 
   backend:
-    platform: linux/x86_64
     build:
       dockerfile: dockerfile.dev
       context: ./be

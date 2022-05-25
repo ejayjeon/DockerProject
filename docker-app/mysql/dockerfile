@@ -1,0 +1,5 @@
+FROM --platform=linux/x86_64 mysql:5.7
+# M1의 경우 dockerfile : failed to create LLB definition 이슈 발생
+# --platform=linux/x86_64를 가지고 오고자 하는 도커 이미지 앞에 추가해준다
+
+ADD ./my.cnf etc/mysql/conf.d/my.cnf

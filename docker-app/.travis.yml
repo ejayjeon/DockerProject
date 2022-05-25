@@ -1,0 +1,36 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+# before_install:
+#   - docker build -t ejayjeon/react-test-app -f ./fe/dockerfile.dev ./fe
+
+# script:
+#   - docker run -e CI=true ejayjeon/reat-test-app npm run test
+
+after_success:
+  - docker build -t ejayjeon/docker-frontend ./fe
+  - docker build -t ejayjeon/docker-backend ./be
+  - docker build -t ejayjeon/docker-nginx ./nginx
+
+  # 도커허브 로그인
+  - echo "$DOCKER_HUB_PWD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+  # 도커허브로 push
+  - docker push ejayjeon/docker-frontend
+  - docker push ejayjeon/docker-backend
+  - docker push ejayjeon/docker-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-northeast-2"
+  app: "docker-app"
+  env: Dockerapp-env
+  bucket_name: elasticbeanstalk-ap-northeast-2-582601323742
+  bucket_path: "docker-app" # elasticbeanstalk으로 바로 넣는 것이 아라, S3 bucket으로 먼저 넣어주기 때문
+  on:
+    branch: master #어떤 브랜치로 push 했을 때 Travis CI가 AWS로 접근?
+
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY

@@ -1,4 +1,4 @@
-version: "3"
+version: "4"
 services:
   frontend:
     # 개발환경을 위한 Dockerfile 위치

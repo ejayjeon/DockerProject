@@ -21,3 +21,16 @@ after_success:
   - docker push ejayjeon/docker-frontend
   - docker push ejayjeon/docker-backend
   - docker push ejayjeon/docker-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-northeast-2"
+  app: "docker-app"
+  env: Dockerapp-env
+  bucket_name: elasticbeanstalk-ap-northeast-2-582601323742
+  bucket_path: "docker-app" # elasticbeanstalk으로 바로 넣는 것이 아라, S3 bucket으로 먼저 넣어주기 때문
+  on:
+    branch: master #어떤 브랜치로 push 했을 때 Travis CI가 AWS로 접근?
+
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY

@@ -36,7 +36,8 @@ services:
       - /app/node_modules
       - ./be:/app
     environment:
-      MYSQL_HOST: docker-app-mysql.cmok.ap-northeast-2.rds.com
+      MYSQL_HOST: docker-app-mysql.c8lttebgqm9l.ap-northeast-2.rds.amazonaws.com
+      # 데이터베이스 엔드포인트
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: qwer1234
       MYSQL_DATABASE: app

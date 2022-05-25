@@ -1,4 +1,4 @@
-version: "4"
+version: "3"
 services:
   frontend:
     # 개발환경을 위한 Dockerfile 위치
@@ -11,7 +11,7 @@ services:
       - /app/node_modules
       - ./fe:/app
     stdin_open: true
-    mem_limit: 128m
+    # mem_limit: 128m
 
   nginx:
     restart: always
@@ -20,8 +20,8 @@ services:
       dockerfile: dockerfile
       context: ./nginx
     ports:
-      - "80:80"
-    mem_limit: 128,
+      - "3000:80"
+    # mem_limit: 128,
     links:
       - frontend
       - backend
@@ -42,7 +42,7 @@ services:
       MYSQL_ROOT_PASSWORD: qwer1234
       MYSQL_DATABASE: app
       MYSQL_PORT: 3306
-    mem_limit: 128m
+    # mem_limit: 128m
 
   # mysql:
   #   build: ./mysql
